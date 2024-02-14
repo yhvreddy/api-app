@@ -1,0 +1,2 @@
+https://www.bacancytechnology.com/blog/laravel-swagger-integration
+https://github.com/DarkaOnLine/L5-Swagger/wiki

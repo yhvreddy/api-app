@@ -1,0 +1,144 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger with Laravel APIs",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "operationId": "092a2210d4555e38037f7b3d47f43708",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/v1/user": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Creating new user",
+                "operationId": "b06edc54e183ec3754acab6da6f77d26",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "password"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created successful"
+                    },
+                    "401": {
+                        "description": "Failed to create user"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{user}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get logged-in user details",
+                "operationId": "eaf690f9636aec5184475b8f76859e82",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "query",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Authenticate user and generate token",
+                "operationId": "88066443cc1a490fa39e40b6cafd5ff9",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "sanctum",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
