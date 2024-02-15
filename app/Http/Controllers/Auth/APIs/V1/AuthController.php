@@ -83,7 +83,7 @@ class AuthController extends Controller
             return $this->objecteCreated('User Create', $user);
 
         } catch (\Throwable $th) {
-            return $this->internalServer($th->getMessage());
+            return $this->internalServer('Somthing worng', $th->getMessage());
         }
     }
 

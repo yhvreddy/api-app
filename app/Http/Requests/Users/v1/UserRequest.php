@@ -3,9 +3,16 @@
 namespace App\Http\Requests\Users\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Traits\HttpResonse;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
 class UserRequest extends FormRequest
 {
+    use HttpResonse;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,9 +32,30 @@ class UserRequest extends FormRequest
         $method = $this->method();
 
         return [
-            'name' => 'required',
+            'name' => 'required|alpha_spaces',
             'email' => 'required|email|unique:users,email',
             'password' => 'required'
         ];
+    }
+
+    public function messages(){
+        return [
+            'alpha_spaces' => 'The :attribute may only contain letters and spaces.',
+        ];
+    }
+
+    // Customize the validation failure behavior
+    protected function failedValidation(Validator $validator){
+        if ($this->wantsJson()) {
+            throw new HttpResponseException(
+                $this->validation('Validation error', $validator->errors())
+            );
+        } else {
+            throw new HttpResponseException(
+                redirect()->back()
+                    ->withInput($this->input())
+                    ->withErrors($validator)
+            );
+        }
     }
 }
