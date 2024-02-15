@@ -14,9 +14,7 @@ use App\Http\Controllers\Auth\APIs\V1\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -24,4 +22,6 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::resource('user', AuthController::class);
+    Route::delete('user/{user}/trashed', [AuthController::class, 'delete']);
+    Route::patch('user/{user}/restore', [AuthController::class, 'restore']);
 });

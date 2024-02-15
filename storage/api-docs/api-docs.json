@@ -5,20 +5,19 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/v1/users": {
+        "/api/v1/user": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "operationId": "092a2210d4555e38037f7b3d47f43708",
+                "summary": "Get all Users List",
+                "operationId": "babaf8a5ff0bc9f2e918c6fe96b2ade8",
                 "responses": {
                     "default": {
                         "description": "successful operation"
                     }
                 }
-            }
-        },
-        "/api/v1/user": {
+            },
             "post": {
                 "tags": [
                     "Users"
@@ -74,7 +73,7 @@
                 "parameters": [
                     {
                         "name": "user",
-                        "in": "query",
+                        "in": "path",
                         "description": "User id",
                         "required": true,
                         "schema": {
@@ -86,12 +85,80 @@
                     "200": {
                         "description": "Success"
                     }
-                },
-                "security": [
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Hard delete user details",
+                "operationId": "db5180547ea70143a55d55a175f97799",
+                "parameters": [
                     {
-                        "bearerAuth": []
+                        "name": "user",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{user}/trashed": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Soft delete user details",
+                "operationId": "21001f13d46ebc91b23b6d4b85cf1fec",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{user}/restore": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retore soft deleted user details",
+                "operationId": "84fa4b3b1d8bafa3c96f1cb958b0625c",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
             }
         },
         "/api/auth/login": {

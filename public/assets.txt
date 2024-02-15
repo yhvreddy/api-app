@@ -1,2 +1,7 @@
+//Swagger
 https://www.bacancytechnology.com/blog/laravel-swagger-integration
 https://github.com/DarkaOnLine/L5-Swagger/wiki
+https://dev.to/avsecdongol/laravel-api-documentation-with-swagger-and-passport-3ec0
+
+
+//
