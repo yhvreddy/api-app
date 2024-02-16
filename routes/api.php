@@ -16,11 +16,11 @@ use App\Http\Controllers\Auth\APIs\V1\AuthController;
 
 // Route::middleware('auth:sanctum')
 
-Route::prefix('auth')->group(function () {
-    Route::post('login', [AuthController::class, 'login']);
-});
-
 Route::prefix('v1')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('login', [AuthController::class, 'login']);
+    });
+
     Route::resource('user', AuthController::class);
     Route::delete('user/{user}/trashed', [AuthController::class, 'delete']);
     Route::patch('user/{user}/restore', [AuthController::class, 'restore']);

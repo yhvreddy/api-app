@@ -10,7 +10,10 @@ use App\Http\Resources\v1\UserResource;
 use App\Http\Resources\v1\UserCollection;
 use App\Http\Requests\Users\v1\UserRequest;
 use App\Http\Requests\Users\v1\UserUpdateRequest;
+use App\Http\Requests\Auth\v1\AuthRequest;
 use Hash;
+use Illuminate\Support\Facades\Auth;
+
 class AuthController extends Controller
 {
     use HttpResonse;
@@ -278,7 +281,7 @@ class AuthController extends Controller
     //Auth User
     /**
      * @OA\Post(
-     *     path="/api/auth/login",
+     *     path="/api/v1/auth/login",
      *     tags={"Auth"},
      *     summary="Authenticate user and generate token",
      *     @OA\Parameter(
@@ -295,11 +298,36 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
-     *     @OA\Response(response="200", description="Login successful"),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Login successful",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          )
+     *      ),
      *     @OA\Response(response="401", description="Invalid credentials")
      * )
      */
-    public function login(Request $request){
+    public function login(AuthRequest $request){
+        try {
+            if(!$request->wantsJson()){
+                return $this->validation('Invalid data format, Its allow only json request.');
+            }
 
+            $data = $request->validated();
+            
+            if(!Auth::attempt($data)){
+                return $this->unauthorized('Invalid login details.');
+            }
+
+            $user = $request->user();
+            $tokenResult = $user->createToken('PersonalAccessToken_'.$user->id);
+            $user->accessToken = $tokenResult->plainTextToken;
+            $user->token_type = 'Bearer';
+            $user = new UserResource($user);
+            return $this->success('Login Success', $user);
+        } catch (\Throwable $th) {
+            return $this->internalServer('Somthing worng', $th->getMessage());
+        }
     }
 }
