@@ -44,7 +44,7 @@
                         "description": "User's email",
                         "required": true,
                         "schema": {
-                            "type": "email"
+                            "type": "string"
                         }
                     },
                     {
@@ -53,7 +53,7 @@
                         "description": "User's password",
                         "required": true,
                         "schema": {
-                            "type": "password"
+                            "type": "string"
                         }
                     }
                 ],
