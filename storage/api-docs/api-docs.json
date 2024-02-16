@@ -59,7 +59,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User created successful"
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {}
+                        }
                     },
                     "401": {
                         "description": "Failed to create user"
