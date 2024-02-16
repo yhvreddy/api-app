@@ -63,14 +63,14 @@ class AuthController extends Controller
      *         in="query",
      *         description="User's email",
      *         required=true,
-     *         @OA\Schema(type="email")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="password",
      *         in="query",
      *         description="User's password",
      *         required=true,
-     *         @OA\Schema(type="password")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(response="200", description="User created successful"),
      *     @OA\Response(response="401", description="Failed to create user")
