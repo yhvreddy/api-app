@@ -4,4 +4,5 @@ https://github.com/DarkaOnLine/L5-Swagger/wiki
 https://dev.to/avsecdongol/laravel-api-documentation-with-swagger-and-passport-3ec0
 
 
-//
+//laravel-sanctum
+https://demos.pixinvent.com/vuexy-vuejs-admin-template/documentation/guide/laravel-integration/laravel-sanctum-authentication.html
