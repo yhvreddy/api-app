@@ -9,6 +9,8 @@ use App\Http\Traits\HttpResonse;
 use App\Http\Resources\v1\UserResource;
 use App\Http\Resources\v1\UserCollection;
 use App\Http\Requests\Users\v1\UserRequest;
+use App\Http\Requests\Users\v1\UserUpdateRequest;
+use Hash;
 class AuthController extends Controller
 {
     use HttpResonse;
@@ -78,7 +80,9 @@ class AuthController extends Controller
                 return $this->validation('Invalid data format, Its allow only json request.');
             }
 
-            $data = $request->all();
+            $data = $request->validated();
+            if(!empty($data['password'])) $data['Password'] = Hash::make($data['password']);
+
             $user = new UserResource(User::create($data));
             return $this->objecteCreated('User Create', $user);
 
@@ -123,9 +127,66 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    /**
+     * @OA\Put(
+     *     path="/api/v1/user/{user}",
+     *     tags={"Users"},
+     *     summary="Update existing user",
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="User Id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="User name",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="User's email",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="User's password",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="User updated successful"),
+     *     @OA\Response(response="401", description="Failed to update user")
+     * )
+     */
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        $data = $request->validated();
+
+        if($user->email !== $request->email){
+            $checkEmail = User::where('email', $request->email)->where('id', '!=', $user->id)->get()->count();
+            if($checkEmail){
+                return $this->validation('Email is already exists.');       
+            }
+        }
+
+        $newData = [];
+        if(!empty($data['password']) && isset($data['password'])){
+            $newData['password'] = Hash::make($data['password']);
+        }else{
+            unset($data['password']);
+        }
+        $data = array_merge($data, $newData);
+        if ($user->update($data)) {
+            return $this->success('User Updated Successfully.', new UserResource($user));
+        }
+        
+        return $this->validation('Error while updating user. Please try again later.'); 
     }
 
     /**

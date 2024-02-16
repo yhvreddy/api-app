@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|alpha_spaces',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required'
+            'password' => 'required|alpha_num'
         ];
     }
 
