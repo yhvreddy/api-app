@@ -72,7 +72,13 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
-     *     @OA\Response(response="200", description="User created successful"),
+     *     @OA\Response(
+     *          response=200,
+     *          description="User created successfully",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          )
+     *      ),
      *     @OA\Response(response="401", description="Failed to create user")
      * )
      */
