@@ -3,7 +3,7 @@ namespace App\Http\Traits;
 
 use Illuminate\Http\Request;
 
-trait HttpResonse {
+trait HttpResource {
 
     public function success($message, $data = null){
         return response()->json([
@@ -13,7 +13,7 @@ trait HttpResonse {
         ], 200);
     }
     
-    public function objecteCreated($message, $data = null){
+    public function objectCreated($message, $data = null){
         return response()->json([
             'status' => true,
             'message' => $message,

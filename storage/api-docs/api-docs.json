@@ -201,7 +201,7 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Retore soft deleted user details",
+                "summary": "Restore soft deleted user details",
                 "operationId": "84fa4b3b1d8bafa3c96f1cb958b0625c",
                 "parameters": [
                     {
@@ -257,6 +257,189 @@
                     },
                     "401": {
                         "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/v1/todo": {
+            "get": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Get all Todo's List",
+                "operationId": "cef9decc230a3cecc9f611819ba49c7f",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Creating new todo task",
+                "operationId": "9daa1a8cd72e60e673aa038794b5b613",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Todo title",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Todo description",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "User Id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Todo added successfully",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Failed to add todo"
+                    }
+                }
+            }
+        },
+        "/api/v1/todo/{todo}": {
+            "put": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Update todo task",
+                "operationId": "220af1cc0af8b3c8d03f2a4688fa746c",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Todo title",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Todo description",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "todo",
+                        "in": "path",
+                        "description": "Todo Id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Todo Update successfully",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Failed to update todo"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Hard delete todo details",
+                "operationId": "dd7e08dab5e1b7bce902957d1ad6ed0b",
+                "parameters": [
+                    {
+                        "name": "todo",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/todo/{todo}/trashed": {
+            "delete": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Soft delete todo details",
+                "operationId": "3852e57f76e316f17429d5df3ace655d",
+                "parameters": [
+                    {
+                        "name": "todo",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/todo/{todo}/restore": {
+            "patch": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Restore soft deleted todo details",
+                "operationId": "f028135c7ac570f508da6a3ae9a6f00e",
+                "parameters": [
+                    {
+                        "name": "todo",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
                     }
                 }
             }

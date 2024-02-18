@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use App\Http\Traits\HttpResonse;
+use App\Http\Traits\HttpResource;
 use Route;
 
 class Handler extends ExceptionHandler
 {
-    use HttpResonse;
+    use HttpResource;
 
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.

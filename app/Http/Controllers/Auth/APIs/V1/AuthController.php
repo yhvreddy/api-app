@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth\APIs\V1;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Traits\HttpResonse;
+use App\Http\Traits\HttpResource;
 use App\Http\Resources\v1\UserResource;
 use App\Http\Resources\v1\UserCollection;
 use App\Http\Requests\Users\v1\UserRequest;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    use HttpResonse;
+    use HttpResource;
 
     /**
      * Display a listing of the resource.
@@ -93,10 +93,10 @@ class AuthController extends Controller
             if(!empty($data['password'])) $data['Password'] = Hash::make($data['password']);
 
             $user = new UserResource(User::create($data));
-            return $this->objecteCreated('User Create', $user);
+            return $this->objectCreated('User Create', $user);
 
         } catch (\Throwable $th) {
-            return $this->internalServer('Somthing worng', $th->getMessage());
+            return $this->internalServer('Something wrong', $th->getMessage());
         }
     }
 
@@ -228,7 +228,7 @@ class AuthController extends Controller
     }
     
     /**
-     * Remove the specified resource from storage as tempery.
+     * Remove the specified resource from storage as temp.
      */
     /**
      * @OA\Delete(
@@ -268,7 +268,7 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
-     *     summary="Retore soft deleted user details",
+     *     summary="Restore soft deleted user details",
      *     @OA\Response(response="200", description="Success"),
      * )
      */
@@ -333,7 +333,7 @@ class AuthController extends Controller
             $user = new UserResource($user);
             return $this->success('Login Success', $user);
         } catch (\Throwable $th) {
-            return $this->internalServer('Somthing worng', $th->getMessage());
+            return $this->internalServer('Something wrong', $th->getMessage());
         }
     }
 }

@@ -5,31 +5,94 @@ namespace App\Http\Controllers\ToDo\APIs\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use App\Http\Resources\ToDo\v1\TodoResource;
+use App\Http\Resources\ToDo\v1\TodoCollection;
+use App\Http\Traits\HttpResource;
+use App\Http\Requests\ToDo\v1\TodoStoreRequest;
+use App\Http\Requests\ToDo\v1\TodoUpdateRequest;
 
 class TodoController extends Controller
 {
+    use  HttpResource;
+
     /**
      * Display a listing of the resource.
      */
+    /**
+     * @OA\Get(
+     *   tags={"Todo"},
+     *   path="/api/v1/todo",
+     *   summary="Get all Todo's List",
+     *   @OA\Response(
+     *       response="default",
+     *       description="successful operation",
+     *   )
+     * )
+     */
     public function index()
     {
-        //
+        $todo = new TodoCollection(Todo::paginate());
+        return $this->success('Todo List', $todo);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create(){}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    /**
+     * @OA\Post(
+     *     path="/api/v1/todo",
+     *     tags={"Todo"},
+     *     summary="Creating new todo task",
+     *     @OA\Parameter(
+     *         name="title",
+     *         in="query",
+     *         description="Todo title",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="description",
+     *         in="query",
+     *         description="Todo description",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="user_id",
+     *         in="query",
+     *         description="User Id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Todo added successfully",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          )
+     *      ),
+     *     @OA\Response(response="401", description="Failed to add todo")
+     * )
+     */
+    public function store(TodoStoreRequest $request)
     {
-        //
+        try {
+            if(!$request->wantsJson()){
+                return $this->validation('Invalid data format, Its allow only json request.');
+            }
+
+            $data = $request->validated();
+            $todo = new TodoResource(Todo::create($data));
+            return $this->objectCreated('Todo Create', $todo);
+
+        } catch (\Throwable $th) {
+            return $this->internalServer('Something wrong', $th->getMessage());
+        }
     }
 
     /**
@@ -43,24 +106,139 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Todo $todo)
-    {
-        //
-    }
+    public function edit(Todo $todo){}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Todo $todo)
+    /**
+     * @OA\Put(
+     *     path="/api/v1/todo/{todo}",
+     *     tags={"Todo"},
+     *     summary="Update todo task",
+     *     @OA\Parameter(
+     *         name="title",
+     *         in="query",
+     *         description="Todo title",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="description",
+     *         in="query",
+     *         description="Todo description",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="todo",
+     *         in="path",
+     *         description="Todo Id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Todo Update successfully",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          )
+     *      ),
+     *     @OA\Response(response="401", description="Failed to update todo")
+     * )
+     */
+    public function update(TodoUpdateRequest $request, Todo $todo)
     {
-        //
+        $data = $request->validated();
+        if ($todo->update($data)) {
+            return $this->success('Todo Updated Successfully.', new TodoResource($todo));
+        }
+        
+        return $this->validation('Error while updating todo. Please try again later.'); 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo)
+    /**
+     * @OA\Delete(
+     *     tags={"Todo"},
+     *     path="/api/v1/todo/{todo}",
+     *     @OA\Parameter(
+     *         name="todo",
+     *         in="path",
+     *         description="Todo id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     summary="Hard delete todo details",
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function destroy($todo)
     {
-        //
+        $todo  = Todo::onlyTrashed()->find($todo);
+        if($todo){
+            $todo->forceDelete();
+            return $this->noContent('Todo deleted successfully.');
+        }
+
+        return $this->validation('Todo not found or already deleted.');
+    }
+
+    /**
+     * Remove the specified resource from storage as temp.
+     */
+    /**
+     * @OA\Delete(
+     *     tags={"Todo"},
+     *     path="/api/v1/todo/{todo}/trashed",
+     *     @OA\Parameter(
+     *         name="todo",
+     *         in="path",
+     *         description="Todo id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     summary="Soft delete todo details",
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function delete(Todo $todo)
+    {
+        if ($todo->delete()) {
+            return $this->noContent('Todo deleted successfully.');
+        }
+
+        return $this->validation('Invalid Request. This user is already deleted.');
+    }
+
+    /**
+     * Restore the deleted resource from storage.
+     */
+    /**
+     * @OA\Patch(
+     *     tags={"Todo"},
+     *     path="/api/v1/todo/{todo}/restore",
+     *     @OA\Parameter(
+     *         name="todo",
+     *         in="path",
+     *         description="Todo id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     summary="Restore soft deleted todo details",
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function restore($todo)
+    {
+        $todo  = Todo::onlyTrashed()->find($todo);
+        if($todo){
+            $todo->restore();
+            return $this->noContent('Todo restored successfully.');
+        }
+
+        return $this->validation('No trash data of this user.');
     }
 }

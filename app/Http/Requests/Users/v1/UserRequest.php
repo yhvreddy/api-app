@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Users\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Traits\HttpResonse;
+use App\Http\Traits\HttpResource;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 
 class UserRequest extends FormRequest
 {
-    use HttpResonse;
+    use HttpResource;
 
     /**
      * Determine if the user is authorized to make this request.

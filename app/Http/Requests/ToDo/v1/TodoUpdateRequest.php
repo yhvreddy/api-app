@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Users\v1;
+namespace App\Http\Requests\ToDo\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Traits\HttpResource;
@@ -8,13 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\Rule;
-use Hash;
 
-class UserUpdateRequest extends FormRequest
+class TodoUpdateRequest extends FormRequest
 {
-    use HttpResource;
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -30,17 +26,9 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        $method = $this->method();
-
         return [
-            'name' => 'required|alpha_spaces',
-            'email' => [
-                        'sometimes',
-                        'email',
-                        Rule::unique('users')->ignore($this->user->id, 'id', 'App\Models\User')
-                    ],
-            'password' => 'sometimes'
+            'title' => 'required',
+            'description' => 'required',
         ];
     }
 
@@ -62,19 +50,6 @@ class UserUpdateRequest extends FormRequest
                     ->withInput($this->input())
                     ->withErrors($validator)
             );
-        }
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-        if($this->password == null){
-            $this->request->remove('password');
-        }
-        if($this->email == null){
-            $this->request->remove('email');
         }
     }
 }

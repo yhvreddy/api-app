@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\APIs\V1\AuthController;
+use App\Http\Controllers\ToDo\APIs\V1\TodoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,4 +25,8 @@ Route::prefix('v1')->group(function () {
     Route::resource('user', AuthController::class);
     Route::delete('user/{user}/trashed', [AuthController::class, 'delete']);
     Route::patch('user/{user}/restore', [AuthController::class, 'restore']);
+
+    Route::resource('todo', TodoController::class);
+    Route::delete('todo/{todo}/trashed', [TodoController::class, 'delete']);
+    Route::patch('todo/{todo}/restore', [TodoController::class, 'restore']);
 });
