@@ -21,7 +21,8 @@ class Todo extends Model
         'title',
         'description',
         'user_id',
-        'deleted_at'
+        'deleted_at',
+        'is_completed'
     ];
 
     /**
