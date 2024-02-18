@@ -100,7 +100,12 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        //
+        if(!$todo){
+            return $this->success('No User Details Found.');
+        }
+
+        $todo = new TodoResource($todo);
+        return $this->success('Todo Details', $todo);
     }
 
     /**
