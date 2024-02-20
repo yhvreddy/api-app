@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('todo', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('title', 250);
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('user_id')->default(1);
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
