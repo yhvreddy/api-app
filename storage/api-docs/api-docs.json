@@ -171,13 +171,13 @@
                 }
             }
         },
-        "/api/v1/user/{user}/trashed": {
+        "/api/v1/user/trashed/{user}": {
             "delete": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Soft delete user details",
-                "operationId": "21001f13d46ebc91b23b6d4b85cf1fec",
+                "operationId": "44b35849848a3aefc0e167ceb9e8033c",
                 "parameters": [
                     {
                         "name": "user",
@@ -196,13 +196,13 @@
                 }
             }
         },
-        "/api/v1/user/{user}/restore": {
+        "/api/v1/user/restore/{user}": {
             "patch": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Restore soft deleted user details",
-                "operationId": "84fa4b3b1d8bafa3c96f1cb958b0625c",
+                "operationId": "30e8736953823436649b90ea09819199",
                 "parameters": [
                     {
                         "name": "user",
@@ -394,13 +394,13 @@
                 }
             }
         },
-        "/api/v1/todo/{todo}/trashed": {
+        "/api/v1/todo/trashed/{todo}": {
             "delete": {
                 "tags": [
                     "Todo"
                 ],
                 "summary": "Soft delete todo details",
-                "operationId": "3852e57f76e316f17429d5df3ace655d",
+                "operationId": "e845fa0974ff923f665724d7c339fff7",
                 "parameters": [
                     {
                         "name": "todo",
@@ -419,13 +419,13 @@
                 }
             }
         },
-        "/api/v1/todo/{todo}/restore": {
+        "/api/v1/todo/restore/{todo}": {
             "patch": {
                 "tags": [
                     "Todo"
                 ],
                 "summary": "Restore soft deleted todo details",
-                "operationId": "f028135c7ac570f508da6a3ae9a6f00e",
+                "operationId": "920ec3e5261c0c99053821fbfbbe0fc3",
                 "parameters": [
                     {
                         "name": "todo",
