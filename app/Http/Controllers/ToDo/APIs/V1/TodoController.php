@@ -31,7 +31,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todo = new TodoCollection(Todo::paginate());
+        $todo = new TodoCollection(Todo::withTrashed()->paginate());
         return $this->success('Todo List', $todo);
     }
 
