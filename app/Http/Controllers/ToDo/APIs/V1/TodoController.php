@@ -180,9 +180,9 @@ class TodoController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function destroy(Todo $todo)
+    public function destroy($todo)
     {
-        // $todo  = Todo::onlyTrashed()->find($todo);
+        $todo  = Todo::onlyTrashed()->find($todo);
         if($todo){
             $todo->forceDelete();
             return $this->noContent('Todo deleted successfully.');
