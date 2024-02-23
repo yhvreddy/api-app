@@ -23,10 +23,10 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::resource('user', AuthController::class);
-    Route::delete('user/{user}/trashed', [AuthController::class, 'delete']);
-    Route::patch('user/{user}/restore', [AuthController::class, 'restore']);
+    Route::delete('user/trashed/{user}', [AuthController::class, 'delete']);
+    Route::patch('user/restore/{user}', [AuthController::class, 'restore']);
 
     Route::resource('todo', TodoController::class);
-    Route::delete('todo/{todo}/trashed', [TodoController::class, 'delete']);
-    Route::patch('todo/{todo}/restore', [TodoController::class, 'restore']);
+    Route::delete('todo/trashed/{todo}', [TodoController::class, 'delete']);
+    Route::patch('todo/restore/{todo}', [TodoController::class, 'restore']);
 });

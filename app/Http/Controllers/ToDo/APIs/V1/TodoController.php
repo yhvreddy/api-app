@@ -88,7 +88,7 @@ class TodoController extends Controller
 
             $data = $request->validated();
             $todo = new TodoResource(Todo::create($data));
-            return $this->objectCreated('Todo Create', $todo);
+            return $this->objectCreated('Todo task has been created Successfully!', $todo);
 
         } catch (\Throwable $th) {
             return $this->internalServer('Something wrong', $th->getMessage());
@@ -180,15 +180,15 @@ class TodoController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function destroy($todo)
+    public function destroy(Todo $todo)
     {
-        $todo  = Todo::onlyTrashed()->find($todo);
+        // $todo  = Todo::onlyTrashed()->find($todo);
         if($todo){
             $todo->forceDelete();
             return $this->noContent('Todo deleted successfully.');
         }
 
-        return $this->validation('Todo not found or already deleted.');
+        return $this->validation('Invalid request method, please use delete method.');
     }
 
     /**
@@ -215,7 +215,7 @@ class TodoController extends Controller
             return $this->noContent('Todo deleted successfully.');
         }
 
-        return $this->validation('Invalid Request. This user is already deleted.');
+        return $this->validation('Invalid request method, Please use Patch method.');
     }
 
     /**
