@@ -197,7 +197,7 @@ class TodoController extends Controller
     /**
      * @OA\Delete(
      *     tags={"Todo"},
-     *     path="/api/v1/todo/{todo}/trashed",
+     *     path="/api/v1/todo/trashed/{todo}",
      *     @OA\Parameter(
      *         name="todo",
      *         in="path",
@@ -224,7 +224,7 @@ class TodoController extends Controller
     /**
      * @OA\Patch(
      *     tags={"Todo"},
-     *     path="/api/v1/todo/{todo}/restore",
+     *     path="/api/v1/todo/restore/{todo}",
      *     @OA\Parameter(
      *         name="todo",
      *         in="path",

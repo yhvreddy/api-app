@@ -233,7 +233,7 @@ class AuthController extends Controller
     /**
      * @OA\Delete(
      *     tags={"Users"},
-     *     path="/api/v1/user/{user}/trashed",
+     *     path="/api/v1/user/trashed/{user}",
      *     @OA\Parameter(
      *         name="user",
      *         in="path",
@@ -260,7 +260,7 @@ class AuthController extends Controller
     /**
      * @OA\Patch(
      *     tags={"Users"},
-     *     path="/api/v1/user/{user}/restore",
+     *     path="/api/v1/user/restore/{user}",
      *     @OA\Parameter(
      *         name="user",
      *         in="path",
