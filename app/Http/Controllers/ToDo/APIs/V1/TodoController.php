@@ -31,7 +31,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todo = new TodoCollection(Todo::whereNull('deleted_at')->paginate());
+        $todo = new TodoCollection(Todo::whereNull('deleted_at')->orderBy('id', 'desc')->paginate());
         return $this->success('Todo List', $todo);
     }
 
