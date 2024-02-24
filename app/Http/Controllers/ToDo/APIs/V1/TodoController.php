@@ -209,13 +209,14 @@ class TodoController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function delete(Todo $todo)
+    public function delete($todo)
     {
+        $todo = Todo::whereNull('deleted_at')->where('id', $todo)->first();
         if ($todo->delete()) {
             return $this->noContent('Todo deleted successfully.');
         }
 
-        return $this->validation('Invalid request method, Please use Patch method.');
+        return $this->validation('Invalid request method, Please use Delete method.');
     }
 
     /**

@@ -19,7 +19,7 @@ class TodoResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'is_completed' => $this->is_completed,
+            'is_completed' => !empty($this->is_completed)?(($this->is_completed)?1:0):0,
             'user' => new UserResource($this->user),
         ];
 
