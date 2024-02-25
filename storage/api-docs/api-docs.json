@@ -462,7 +462,7 @@
                         }
                     },
                     {
-                        "name": "todo",
+                        "name": "status",
                         "in": "path",
                         "description": "Todo Status",
                         "required": true,
