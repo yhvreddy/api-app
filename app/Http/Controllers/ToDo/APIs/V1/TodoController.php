@@ -262,7 +262,7 @@ class TodoController extends Controller
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
-     *         name="todo",
+     *         name="status",
      *         in="path",
      *         description="Todo Status",
      *         required=true,
