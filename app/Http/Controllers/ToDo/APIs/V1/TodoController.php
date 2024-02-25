@@ -68,7 +68,7 @@ class TodoController extends Controller
      *         in="query",
      *         description="User Id",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *          response=200,
@@ -141,7 +141,7 @@ class TodoController extends Controller
      *         in="path",
      *         description="Todo Id",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *          response=200,
@@ -175,7 +175,7 @@ class TodoController extends Controller
      *         in="path",
      *         description="Todo id",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="integer")
      *     ),
      *     summary="Hard delete todo details",
      *     @OA\Response(response="200", description="Success"),
@@ -204,7 +204,7 @@ class TodoController extends Controller
      *         in="path",
      *         description="Todo id",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="integer")
      *     ),
      *     summary="Soft delete todo details",
      *     @OA\Response(response="200", description="Success"),
@@ -232,7 +232,7 @@ class TodoController extends Controller
      *         in="path",
      *         description="Todo id",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="integer")
      *     ),
      *     summary="Restore soft deleted todo details",
      *     @OA\Response(response="200", description="Success"),
@@ -259,14 +259,14 @@ class TodoController extends Controller
      *         in="path",
      *         description="Todo id",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
      *         name="status",
      *         in="path",
      *         description="Todo Status",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="boolean")
      *     ),
      *     summary="Restore soft deleted todo details",
      *     @OA\Response(response="200", description="Success"),
@@ -276,6 +276,7 @@ class TodoController extends Controller
         $todo  = Todo::find($todo);
         if($todo){
             $todo->is_completed = $status;
+            $todo->save();
             return $this->noContent('Todo status updated successfully.');
         }
 

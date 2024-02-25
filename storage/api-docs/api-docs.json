@@ -305,7 +305,7 @@
                         "description": "User Id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -354,7 +354,7 @@
                         "description": "Todo Id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -383,7 +383,7 @@
                         "description": "Todo id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -408,7 +408,7 @@
                         "description": "Todo id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -433,7 +433,7 @@
                         "description": "Todo id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -458,7 +458,7 @@
                         "description": "Todo id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     },
                     {
@@ -467,7 +467,7 @@
                         "description": "Todo Status",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "boolean"
                         }
                     }
                 ],
