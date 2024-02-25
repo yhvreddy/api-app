@@ -31,7 +31,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todoList = Todo::whereNull('deleted_at')->orderBy('id', 'desc')->paginate();
+        $todoList = Todo::whereNull('deleted_at')->where('is_completed', 0)->orderBy('id', 'desc')->paginate();
         // return response()->json($todoList, 200);
         return $this->success('Todo List', new TodoCollection($todoList));
     }
@@ -277,7 +277,7 @@ class TodoController extends Controller
         if($todo){
             $todo->is_completed = $status?1:0;
             $todo->save();
-            return $this->noContent('Todo status updated successfully.');
+            return $this->noContent('Todo status updated successfully.', new TodoResource($todo));
         }
 
         return $this->validation('Invalid request method, please use patch method.');
