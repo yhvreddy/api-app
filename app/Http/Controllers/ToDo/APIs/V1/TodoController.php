@@ -273,7 +273,7 @@ class TodoController extends Controller
      * )
      */
     public function updateTodoStatus($todo, $status) {
-        $todo  = Todo::onlyTrashed()->find($todo);
+        $todo  = Todo::find($todo);
         if($todo){
             $todo->is_completed = $status;
             return $this->noContent('Todo status updated successfully.');
