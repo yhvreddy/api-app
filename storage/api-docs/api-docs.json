@@ -443,6 +443,40 @@
                     }
                 }
             }
+        },
+        "/api/v1/todo/isDone/{todo}/{status}": {
+            "patch": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Restore soft deleted todo details",
+                "operationId": "be955de751393f23fcc4f4f62d8c8997",
+                "parameters": [
+                    {
+                        "name": "todo",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "todo",
+                        "in": "path",
+                        "description": "Todo Status",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
         }
     },
     "components": {

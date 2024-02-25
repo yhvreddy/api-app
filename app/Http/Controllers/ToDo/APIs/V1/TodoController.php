@@ -31,8 +31,9 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todo = new TodoCollection(Todo::whereNull('deleted_at')->orderBy('id', 'desc')->paginate());
-        return $this->success('Todo List', $todo);
+        $todoList = Todo::whereNull('deleted_at')->orderBy('id', 'desc')->paginate();
+        // return response()->json($todoList, 200);
+        return $this->success('Todo List', new TodoCollection($todoList));
     }
 
     /**
@@ -246,5 +247,38 @@ class TodoController extends Controller
         }
 
         return $this->validation('No trash data of this user.');
+    }
+
+
+    /**
+     * @OA\Patch(
+     *     tags={"Todo"},
+     *     path="/api/v1/todo/isDone/{todo}/{status}",
+     *     @OA\Parameter(
+     *         name="todo",
+     *         in="path",
+     *         description="Todo id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="todo",
+     *         in="path",
+     *         description="Todo Status",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     summary="Restore soft deleted todo details",
+     *     @OA\Response(response="200", description="Success"),
+     * )
+     */
+    public function updateTodoStatus($todo, $status) {
+        $todo  = Todo::onlyTrashed()->find($todo);
+        if($todo){
+            $todo->is_completed = $status;
+            return $this->noContent('Todo status updated successfully.');
+        }
+
+        return $this->validation('Invalid request method, please use patch method.');
     }
 }
