@@ -22,7 +22,7 @@ class TodoController extends Controller
      * @OA\Get(
      *   tags={"Todo"},
      *   path="/api/v1/todo",
-     *   summary="Get all Todo's List",
+     *   summary="Get Active Todo's List",
      *   @OA\Response(
      *       response="default",
      *       description="successful operation",
@@ -33,6 +33,26 @@ class TodoController extends Controller
     {
         $todoList = Todo::whereNull('deleted_at')->where('is_completed', 0)->orderBy('id', 'desc')->paginate();
         // return response()->json($todoList, 200);
+        return $this->success('Todo List', new TodoCollection($todoList));
+    }
+    
+    /**
+     * Display a listing of the resource.
+     */
+    /**
+     * @OA\Get(
+     *   tags={"Todo"},
+     *   path="/api/v1/todo/list",
+     *   summary="Get all Todo's List",
+     *   @OA\Response(
+     *       response="default",
+     *       description="successful operation",
+     *   )
+     * )
+     */
+    public function getAllTodoList()
+    {
+        $todoList = Todo::orderBy('id', 'desc')->get();
         return $this->success('Todo List', new TodoCollection($todoList));
     }
 

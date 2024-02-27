@@ -266,7 +266,7 @@
                 "tags": [
                     "Todo"
                 ],
-                "summary": "Get all Todo's List",
+                "summary": "Get Active Todo's List",
                 "operationId": "cef9decc230a3cecc9f611819ba49c7f",
                 "responses": {
                     "default": {
@@ -318,6 +318,20 @@
                     },
                     "401": {
                         "description": "Failed to add todo"
+                    }
+                }
+            }
+        },
+        "/api/v1/todo/list": {
+            "get": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Get all Todo's List",
+                "operationId": "e95d831190220ba21eaf40f1d9b5036f",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
                     }
                 }
             }

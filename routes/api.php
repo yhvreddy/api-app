@@ -30,4 +30,5 @@ Route::prefix('v1')->group(function () {
     Route::delete('todo/trashed/{todo}', [TodoController::class, 'delete']);
     Route::patch('todo/restore/{todo}', [TodoController::class, 'restore']);
     Route::patch('todo/isDone/{todo}/{status}', [TodoController::class, 'updateTodoStatus']);
+    Route::get('todo/list', [TodoController::class, 'getAllTodoList']);
 });
